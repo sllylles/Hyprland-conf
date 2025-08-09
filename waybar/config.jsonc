@@ -1,29 +1,45 @@
-// -*- mode: jsonc -*-
 {
-    "layer": "top", // Waybar at top layer
-    "position": "bottom", // Waybar position (top|bottom|left|right)
-    "height": 42, // Waybar height (to be removed for auto height)
-    // "width": 1280, // Waybar width
-    "spacing": 4, // Gaps between modules (4px)
-    // Choose the order of the modules
-    "modules-left": [
-        "custom/arch"
-    ],
-    "modules-center": [
-        "hyprland/window",
-      "hyprland/workspaces"
+    "spacing": 4,
+		// try to keep it 4px across the config
+		"height":25,
+    "modules-left": ["hyprland/workspaces", "custom/icon", "hyprland/window"],
+    "modules-right": [/* "tray", */ "network","pulseaudio", "battery", "clock"],
 
-    ],
-    "modules-right": [
-        "idle_inhibitor",
-        "pulseaudio",
-        "network",
-        "battery",
-        "clock"
-    ],
-    //Modules configuration
-
-    "include": [
-		"~/.config/waybar/modules.json"
-	]
+		//*
+		//MODULES
+		//
+		"custom/icon": {
+        "exec": "~/.config/waybar/state",
+        "interval": "once",
+        "signal": 8
+		},
+    "tray": {
+        "spacing": 10
+    },
+    "clock": {
+        // "timezone": "America/New_York",
+        "tooltip-format": "<big>[{:%Y %B}]</big>\n<tt><small>{calendar}</small></tt>",
+        "format": "[{:%H:%M}]",
+        "format-alt": "[{:%Y-%m-%d}]"
+    },
+        "battery": {
+        "format": "[BAT::{capacity}%]"
+    },
+    "pulseaudio": {
+        // "scroll-step": 1, // %, can be a float
+        "format": "[VOL:{volume}%]",
+        "format-muted": "[VOL: M]",
+        "on-click": "pavucontrol"
+   
+},
+     "network": {
+        "format-wifi": "  {essid}",
+        "format-ethernet": "{ipaddr}/{cidr} ",
+        "tooltip-format": "{ifname} via {gwaddr} ",
+        "format-linked": "{ifname} (No IP) ",
+        "format-disconnected": "Disconnected ⚠",
+	"on-click": "sh ~/scripts/rofi-wifi-menu/rofi-wifi-menu.sh"
+    }
 }
+
+
